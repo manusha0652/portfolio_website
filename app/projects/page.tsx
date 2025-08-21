@@ -6,7 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react"
+import { ExternalLink, Github, ChevronLeft, ChevronRight, Download } from "lucide-react"
 
 // Project Image Slideshow Component
 function ProjectImageSlideshow({ images, projectTitle, height = "h-80" }: { images: string[], projectTitle: string, height?: string }) {
@@ -194,72 +194,126 @@ const projects = [
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Navigation */}
-      <nav className="bg-slate-800 px-6 py-4 transition-all duration-300 ease-in-out">
+      <nav className="bg-slate-800/95 backdrop-blur-sm px-6 py-4 fixed top-0 w-full z-50 border-b border-slate-700/50 transition-all duration-300 ease-in-out">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" className="text-white font-bold text-xl hover:text-blue-400 transition-colors duration-300">
-            Manusha.dev
+            <span className="gradient-text">Manusha</span>.dev
           </Link>
-          <div className="hidden md:flex space-x-8">
-            <Link href="/" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform">
+          <div className="hidden md:flex space-x-8 items-center">
+            <Link href="/" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform relative group">
               Home
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="/#about" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform">
+            <Link href="/#about" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform relative group">
               About Me
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="/projects" className="text-blue-400 font-semibold">
+            <Link href="/projects" className="text-blue-400 font-semibold relative">
               Projects
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></span>
             </Link>
-            <Link href="/#contact" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform">
+            <Link href="/#contact" className="text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 transform relative group">
               Contact
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Button
               variant="outline"
               size="sm"
-              className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-700 transition-all duration-300 hover:scale-105 transform hover:border-blue-400"
+              className="glass border-blue-500/50 text-blue-300 hover:bg-blue-500/20 hover:border-blue-400 transition-all duration-300 hover:scale-105 transform"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/cv/Manusha_Ranaweera_CV.pdf';
+                link.download = 'Manusha_Ranaweera_CV.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
             >
+              <Download className="w-4 h-4 mr-2" />
               Download Resume
             </Button>
           </div>
         </div>
       </nav>
 
+      {/* Add padding to account for fixed navbar */}
+      <div className="pt-20"></div>
+
       {/* Hero Section */}
-      <section className="bg-slate-900 px-6 py-20">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in-up">
-            My Projects
+      <section className="gradient-bg-hero px-6 py-20 relative overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="grid grid-cols-12 gap-4 h-full">
+            {[...Array(96)].map((_, i) => (
+              <div key={i} className="w-1 h-1 bg-blue-400/30 rounded-full animate-pulse" style={{animationDelay: `${i * 50}ms`}}></div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in-up">
+            My <span className="gradient-text">Projects</span>
           </h1>
-          <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+          <p className="text-gray-400 text-xl mb-12 max-w-3xl mx-auto animate-fade-in-up animation-delay-200 leading-relaxed">
             A collection of projects I've worked on, showcasing my skills in web development, 
-            software engineering, and problem-solving.
+            software engineering, and problem-solving. Each project represents a unique challenge and learning experience.
           </p>
+          
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-400">
+            <div className="text-center">
+              <div className="text-3xl font-bold gradient-text mb-2">15+</div>
+              <div className="text-gray-400 text-sm">Projects Built</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold gradient-text mb-2">10+</div>
+              <div className="text-gray-400 text-sm">Technologies Used</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold gradient-text mb-2">3+</div>
+              <div className="text-gray-400 text-sm">Years Experience</div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Featured Projects */}
-      <section className="bg-slate-800 px-6 py-20">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-12 animate-fade-in-up">
-            Featured Projects
+      <section className="bg-slate-800 px-6 py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <h2 className="text-4xl font-bold text-center mb-4 animate-fade-in-up">
+            Featured <span className="gradient-text">Projects</span>
           </h2>
+          <p className="text-gray-400 text-center mb-12 animate-fade-in-up animation-delay-200">
+            Highlighting my most impactful and technically challenging projects
+          </p>
+          
           <div className="grid md:grid-cols-2 gap-8">
             {featuredProjects.map((project, index) => (
               <Card 
                 key={project.id} 
-                className="bg-slate-700 border-slate-600 hover:bg-slate-600 transition-all duration-300 hover:scale-105 transform hover:shadow-xl animate-fade-in-up"
+                className="glass border-slate-600/50 hover-lift animate-fade-in-up group relative overflow-hidden"
                 style={{animationDelay: `${index * 200}ms`}}
               >
-                <CardHeader>
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <CardHeader className="relative z-10">
                   <ProjectImageSlideshow images={project.images} projectTitle={project.title} />
-                  <CardTitle className="text-white text-xl">{project.title}</CardTitle>
-                  <CardDescription className="text-gray-300">
+                  <CardTitle className="text-white text-xl group-hover:text-blue-300 transition-colors">{project.title}</CardTitle>
+                  <CardDescription className="text-gray-300 group-hover:text-gray-200 transition-colors">
                     {project.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="bg-blue-600 text-white">
+                    {project.technologies.map((tech, techIndex) => (
+                      <Badge 
+                        key={tech} 
+                        variant="secondary" 
+                        className="bg-blue-600/20 text-blue-300 border border-blue-500/30 hover:bg-blue-600/30 transition-colors"
+                        style={{animationDelay: `${techIndex * 100}ms`}}
+                      >
                         {tech}
                       </Badge>
                     ))}
@@ -268,7 +322,7 @@ const projects = [
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex items-center gap-2 bg-transparent border-gray-500 text-gray-300 hover:bg-gray-600"
+                      className="flex items-center gap-2 glass border-gray-500/50 text-gray-300 hover:bg-gray-600/30 hover:border-blue-400/50 transition-all duration-300"
                       asChild
                     >
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
@@ -278,7 +332,7 @@ const projects = [
                     </Button>
                     <Button
                       size="sm"
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+                      className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 hover:scale-105 transform"
                       asChild
                     >
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
