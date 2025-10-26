@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -9,9 +9,15 @@ import { Code, Lightbulb, Users, GraduationCap, School, Download } from "lucide-
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa"
 import { Toast, useToast } from "@/components/ui/toast-notification"
 import { ContactForm } from "@/components/ui/contact-form"
+import { initEmailJS } from "@/lib/email"
 
 export default function Portfolio() {
   const { toast, showToast, hideToast } = useToast()
+
+  // Initialize EmailJS on component mount
+  useEffect(() => {
+    initEmailJS()
+  }, [])
 
   const handleDownloadCV = () => {
     // Create a link to download CV
